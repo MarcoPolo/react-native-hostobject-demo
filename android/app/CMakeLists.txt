@@ -10,6 +10,7 @@ cmake_minimum_required(VERSION 3.4.1)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
+execute_process (COMMAND sh "-c" "'(cd ./node_modules/react-native && `pwd`/scripts/ios-install-third-party.sh)'" )
 # Needed to locate double-conversion src correctly for folly includes
 execute_process (COMMAND ln "-s" "src" "../../node_modules/react-native/third-party/double-conversion-1.1.6/double-conversion")
 
