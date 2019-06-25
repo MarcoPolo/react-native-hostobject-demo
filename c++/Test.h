@@ -6,11 +6,11 @@
 
 namespace example {
 
-  class Test {
-  private:
-    friend class TestBinding;
+class Test {
+ private:
+  friend class TestBinding;
 
-    int runTest() const;
-  };
+  int runTest() const;
+};
 
-} // namespace example
+}  // namespace example
