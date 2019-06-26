@@ -22,6 +22,7 @@ public class MainActivity extends ReactActivity implements ReactInstanceManager.
     @Override
     public void onResume() {
         super.onResume();
+//        hi();
         getReactInstanceManager().addReactInstanceEventListener(this);
     }
 
@@ -29,12 +30,15 @@ public class MainActivity extends ReactActivity implements ReactInstanceManager.
     public void onPause() {
         super.onPause();
         getReactInstanceManager().removeReactInstanceEventListener(this);
+//        hi();
     }
 
     @Override
     public void onReactContextInitialized(ReactContext context) {
+//        hi();
         install(context.getJavaScriptContextHolder().get());
     }
 
     public native void install(long jsContextNativePointer);
+//    public native void hi();
 }

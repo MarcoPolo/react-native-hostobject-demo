@@ -17,6 +17,12 @@ typedef struct { const char *p; ptrdiff_t n; } _GoString_;
 /* Start of preamble from import "C" comments.  */
 
 
+#line 3 "/Users/marco/code/react-native-hostobject-demo/go/src/jsi-test/testnum/testnum.go"
+
+
+ #include <jni.h>
+
+#line 1 "cgo-generated-wrapper"
 
 
 /* End of preamble from import "C" comments.  */
@@ -68,6 +74,8 @@ extern "C" {
 // TestNum returns a test number to be used in JSI
 
 extern GoInt TestNum();
+
+extern void Java_com_testmodule_MainActivity_hi(JNIEnv* p0, jclass p1);
 
 #ifdef __cplusplus
 }
