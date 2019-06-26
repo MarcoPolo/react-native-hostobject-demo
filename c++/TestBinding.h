@@ -30,7 +30,7 @@ class TestBinding : public jsi::HostObject {
    * Thread synchronization must be enforced externally.
    */
   static void install(jsi::Runtime &runtime,
-                      std::shared_ptr<TestBining> testBinding);
+                      std::shared_ptr<TestBinding> testBinding);
 
   TestBinding(std::unique_ptr<Test> test);
 

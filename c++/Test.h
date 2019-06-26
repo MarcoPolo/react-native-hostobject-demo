@@ -3,6 +3,7 @@
 #pragma once
 
 #include <jsi/jsi.h>
+#include "testnum.h"
 
 namespace example {
 

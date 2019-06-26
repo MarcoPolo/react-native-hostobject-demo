@@ -1,6 +1,12 @@
-package testnum
+package main
+
+import "C"
 
 // TestNum returns a test number to be used in JSI
-func TestNum() int64 {
-	return 9001
+//export TestNum
+func TestNum() int {
+	return int(9001)
+}
+
+func main() {
 }

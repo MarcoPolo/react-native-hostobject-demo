@@ -22,7 +22,37 @@ include_directories(
     ../../node_modules/react-native/third-party/double-conversion-1.1.6
     ../../node_modules/react-native/third-party/boost_1_63_0
     ../../node_modules/react-native/third-party/glog-0.3.5/src
+    ../../from-go
 )
+
+#link_directories(../../from-go)
+#
+
+#add_library(
+#        testnum
+#        SHARED
+#        IMPORTED
+#)
+#set_target_properties( # Specifies the target library.
+#        testnum
+#
+#        # Specifies the parameter you want to define.
+#        PROPERTIES IMPORTED_LOCATION
+#
+#        # Provides the path to the library you want to import.
+#        ./libtestnum.so
+#
+##        ${PROJECT_SOURCE_DIR}/src/main/jniLibs/x86/libtestnum.so
+##            ./src/main/jniLibs/x86/libtestnum.so
+##        ${LIBRARY_OUTPUT_PATH}/libtestnum.so
+##        ${BUILD_SHARED_LIBS}/libtestnum.so
+#        )
+
+#add_custom_target(testnum
+#        mkdir -p ../obj/${ANDROID_ABI}
+#        COMMAND cp ${PROJECT_SOURCE_DIR}/src/main/jniLibs/x86/libtestnum.so ../obj/${ANDROID_ABI}/
+#)
+
 
 add_definitions(
     -DFOLLY_USE_LIBCPP=1
@@ -39,8 +69,10 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
         ../../node_modules/react-native/ReactCommon/jsi/jsi.cpp
         ../../c++/Test.cpp
-        ../../c++/TestBinding.cpp)
+        ../../c++/TestBinding.cpp
+        )
 
 target_link_libraries(test_module_jni
                       android
+                    "${PROJECT_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libtestnum.so"
                       log)
