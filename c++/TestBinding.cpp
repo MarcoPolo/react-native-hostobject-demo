@@ -2,9 +2,9 @@
 
 #include <dlfcn.h>
 #include <jsi/JSIDynamic.h>
+#include <testnum.h>
 #include <chrono>  // std::chrono::seconds
 #include <thread>
-#include "testnum.h"
 
 struct EventHandlerWrapper {
   EventHandlerWrapper(jsi::Function eventHandler)
@@ -69,36 +69,6 @@ jsi::Value TestBinding::get(jsi::Runtime &runtime,
            size_t count) -> jsi::Value { return TestNum(); });
   }
 
-  // if (methodName == "goTest") {
-  //   return jsi::Function::createFromHostFunction(
-  //       runtime, name, 0,
-  //       [&test](jsi::Runtime &runtime, const jsi::Value &thisValue,
-  //               const jsi::Value *arguments, size_t count) -> jsi::Value {
-  //         char *error;
-  //         auto handle = dlopen("libgojni.so", RTLD_LAZY);
-  //         // auto handle = dlopen("libyoga.so", RTLD_LAZY);
-  //         error = dlerror();
-  //         if (error != NULL) {
-  //           auto s = jsi::String::createFromAscii(runtime, error);
-  //           return s;
-  //         }
-  //         return jsi::Value::undefined();
-
-  //         auto TestNum = (int (*)(void))dlsym(handle, "TestNum");
-  //         error = dlerror();
-  //         if (error != NULL) {
-  //           auto s = jsi::String::createFromAscii(runtime, error);
-  //           return s;
-  //           // jsi::Value v(runtime, s);
-  //           // return v;
-  //           // return jserror.value();
-  //         } else {
-  //           return TestNum();
-  //         }
-  //         return 10;
-  //       });
-  // }
-
   if (methodName == "runCb") {
     return jsi::Function::createFromHostFunction(
         runtime, name, 0,
@@ -112,7 +82,14 @@ jsi::Value TestBinding::get(jsi::Runtime &runtime,
             std::this_thread::sleep_for(std::chrono::seconds(2));
             eventhandler->callback.call(
                 runtime, jsi::String::createFromAscii(runtime, "Hello again!"));
-            eventhandler->callback.call(runtime, TestCb());
+            auto str = TestCb();
+            auto to_return = jsi::String::createFromAscii(runtime, str);
+            eventhandler->callback.call(runtime, to_return);
+
+            auto go_str = TestCbGoString();
+            auto jsi_str = jsi::String::createFromAscii(runtime, go_str.p,
+                                                        size_t(go_str.n));
+            eventhandler->callback.call(runtime, jsi_str);
           });
           t.detach();
           return jsi::Value::undefined();

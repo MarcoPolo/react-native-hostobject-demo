@@ -1,7 +1,6 @@
 package main
 
-// #cgo CFLAGS: -I/Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/include
-// #cgo CFLAGS: -I/Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home/include/darwin
+// #cgo CFLAGS: -I$ANDROID_HOME/ndk-bundle/sysroot/usr/include
 // #include <jni.h>
 import "C"
 import "time"
@@ -16,10 +15,15 @@ func TestNum() int {
 
 // TestCb returns a test number to be used in JSI
 //export TestCb
-func TestCb() int {
+func TestCb() *C.char {
+	time.Sleep(1 * time.Second)
+	return C.CString("Hello from Go")
+}
 
-	time.Sleep(3 * time.Second)
-	return int(9001 + g)
+//export TestCbGoString
+func TestCbGoString() string {
+	time.Sleep(1 * time.Second)
+	return "Hello from GoString"
 }
 
 //export Java_com_testmodule_MainActivity_hi

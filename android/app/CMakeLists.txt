@@ -39,7 +39,6 @@ add_library( # Sets the name of the library.
 
         # Provides a relative path to your source file(s).
         ../../node_modules/react-native/ReactCommon/jsi/jsi.cpp
-        ../../c++/Test.cpp
         ../../c++/TestBinding.cpp
         )
 
