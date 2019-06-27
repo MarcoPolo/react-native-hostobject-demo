@@ -14,4 +14,6 @@ build() {
     mv testnum ../android/app/src/main/jniLibs/$4/libtestnum.so
 }
 
+# Very hacky for now
+# build(clang-toolchain-name GOOS GOARCH jniLib-Arch)
 build i686-linux-android16 android 386 x86

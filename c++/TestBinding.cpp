@@ -25,28 +25,7 @@ JNIEXPORT void JNICALL Java_com_testmodule_MainActivity_install(
 }
 #endif
 
-// void callCb(jsi::Runtime &runtime, jsi::Function &fn) {
-// void callCb(void (*)()) {
-//   std::this_thread::sleep_for(std::chrono::seconds(1));
-//   // fn.call(runtime, {});
-//   fn();
-// }
-
 namespace example {
-
-static jsi::Object getModule(jsi::Runtime &runtime,
-                             const std::string &moduleName) {
-  auto batchedBridge =
-      runtime.global().getPropertyAsObject(runtime, "__fbBatchedBridge");
-  auto getCallableModule =
-      batchedBridge.getPropertyAsFunction(runtime, "getCallableModule");
-  auto module =
-      getCallableModule
-          .callWithThis(runtime, batchedBridge,
-                        {jsi::String::createFromUtf8(runtime, moduleName)})
-          .asObject(runtime);
-  return module;
-}
 
 void TestBinding::install(jsi::Runtime &runtime,
                           std::shared_ptr<TestBinding> testBinding) {
