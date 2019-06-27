@@ -4,15 +4,20 @@
 #include <jsi/JSIDynamic.h>
 #include <chrono>  // std::chrono::seconds
 #include <thread>
-#include "Test.h"
 #include "testnum.h"
+
+struct EventHandlerWrapper {
+  EventHandlerWrapper(jsi::Function eventHandler)
+      : callback(std::move(eventHandler)) {}
+
+  jsi::Function callback;
+};
 
 #if ANDROID
 extern "C" {
 JNIEXPORT void JNICALL Java_com_testmodule_MainActivity_install(
     JNIEnv *env, jobject thiz, jlong runtimePtr) {
-  auto test = std::make_unique<example::Test>();
-  auto testBinding = std::make_shared<example::TestBinding>(std::move(test));
+  auto testBinding = std::make_shared<example::TestBinding>();
   jsi::Runtime *runtime = (jsi::Runtime *)runtimePtr;
 
   example::TestBinding::install(*runtime, testBinding);
@@ -50,19 +55,18 @@ void TestBinding::install(jsi::Runtime &runtime,
   runtime.global().setProperty(runtime, testModuleName, std::move(object));
 }
 
-TestBinding::TestBinding(std::unique_ptr<Test> test) : test_(std::move(test)) {}
+TestBinding::TestBinding() {}
 
 jsi::Value TestBinding::get(jsi::Runtime &runtime,
                             const jsi::PropNameID &name) {
   auto methodName = name.utf8(runtime);
-  auto &test = *test_;
 
   if (methodName == "runTest") {
     return jsi::Function::createFromHostFunction(
         runtime, name, 0,
-        [&test](jsi::Runtime &runtime, const jsi::Value &thisValue,
-                const jsi::Value *arguments,
-                size_t count) -> jsi::Value { return TestNum(); });
+        [](jsi::Runtime &runtime, const jsi::Value &thisValue,
+           const jsi::Value *arguments,
+           size_t count) -> jsi::Value { return TestNum(); });
   }
 
   // if (methodName == "goTest") {
@@ -98,13 +102,17 @@ jsi::Value TestBinding::get(jsi::Runtime &runtime,
   if (methodName == "runCb") {
     return jsi::Function::createFromHostFunction(
         runtime, name, 0,
-        [&test](jsi::Runtime &runtime, const jsi::Value &thisValue,
-                const jsi::Value *arguments, size_t count) -> jsi::Value {
+        [](jsi::Runtime &runtime, const jsi::Value &thisValue,
+           const jsi::Value *arguments, size_t count) -> jsi::Value {
           auto fn = arguments[0].getObject(runtime).asFunction(runtime);
+          auto eventhandler =
+              std::make_shared<EventHandlerWrapper>(std::move(fn));
           // fn.call(runtime, {});
-          std::thread t([&fn]() {
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            fn.call(runtime, {});
+          std::thread t([eventhandler, &runtime]() {
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            eventhandler->callback.call(
+                runtime, jsi::String::createFromAscii(runtime, "Hello again!"));
+            eventhandler->callback.call(runtime, TestCb());
           });
           t.detach();
           return jsi::Value::undefined();

@@ -21,8 +21,8 @@ export default class App extends Component<Props> {
   render() {
     console.warn(global.nativeTest.runTest());
     // console.warn(global.nativeTest.goTest());
-    global.nativeTest.runCb(() => {
-      console.warn("This was called from native code!");
+    global.nativeTest.runCb(arg => {
+      console.warn("This was called from native code!", arg);
     });
     return (
       <View style={styles.container}>

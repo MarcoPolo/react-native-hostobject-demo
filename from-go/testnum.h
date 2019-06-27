@@ -75,6 +75,10 @@ extern "C" {
 
 extern GoInt TestNum();
 
+// TestCb returns a test number to be used in JSI
+
+extern GoInt TestCb();
+
 extern void Java_com_testmodule_MainActivity_hi(JNIEnv* p0, jclass p1);
 
 #ifdef __cplusplus

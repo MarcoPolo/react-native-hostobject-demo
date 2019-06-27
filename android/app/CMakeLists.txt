@@ -25,35 +25,6 @@ include_directories(
     ../../from-go
 )
 
-#link_directories(../../from-go)
-#
-
-#add_library(
-#        testnum
-#        SHARED
-#        IMPORTED
-#)
-#set_target_properties( # Specifies the target library.
-#        testnum
-#
-#        # Specifies the parameter you want to define.
-#        PROPERTIES IMPORTED_LOCATION
-#
-#        # Provides the path to the library you want to import.
-#        ./libtestnum.so
-#
-##        ${PROJECT_SOURCE_DIR}/src/main/jniLibs/x86/libtestnum.so
-##            ./src/main/jniLibs/x86/libtestnum.so
-##        ${LIBRARY_OUTPUT_PATH}/libtestnum.so
-##        ${BUILD_SHARED_LIBS}/libtestnum.so
-#        )
-
-#add_custom_target(testnum
-#        mkdir -p ../obj/${ANDROID_ABI}
-#        COMMAND cp ${PROJECT_SOURCE_DIR}/src/main/jniLibs/x86/libtestnum.so ../obj/${ANDROID_ABI}/
-#)
-
-
 add_definitions(
     -DFOLLY_USE_LIBCPP=1
     -DFOLLY_NO_CONFIG=1

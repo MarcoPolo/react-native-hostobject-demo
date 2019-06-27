@@ -3,7 +3,6 @@
 #pragma once
 
 #include <jsi/jsi.h>
-#include "Test.h"
 
 #if ANDROID
 #include <jni.h>
@@ -32,15 +31,12 @@ class TestBinding : public jsi::HostObject {
   static void install(jsi::Runtime &runtime,
                       std::shared_ptr<TestBinding> testBinding);
 
-  TestBinding(std::unique_ptr<Test> test);
+  TestBinding();
 
   /*
    * `jsi::HostObject` specific overloads.
    */
   jsi::Value get(jsi::Runtime &runtime, const jsi::PropNameID &name) override;
-
- private:
-  std::unique_ptr<Test> test_;
 };
 
 }  // namespace example
