@@ -84,12 +84,8 @@ jsi::Value TestBinding::get(jsi::Runtime &runtime,
                 runtime, jsi::String::createFromAscii(runtime, "Hello again!"));
             auto str = TestCb();
             auto to_return = jsi::String::createFromAscii(runtime, str);
+            free(str);
             eventhandler->callback.call(runtime, to_return);
-
-            auto go_str = TestCbGoString();
-            auto jsi_str = jsi::String::createFromAscii(runtime, go_str.p,
-                                                        size_t(go_str.n));
-            eventhandler->callback.call(runtime, jsi_str);
           });
           t.detach();
           return jsi::Value::undefined();

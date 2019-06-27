@@ -82,8 +82,6 @@ extern GoInt TestNum();
 
 extern char* TestCb();
 
-extern GoString TestCbGoString();
-
 extern void Java_com_testmodule_MainActivity_hi(JNIEnv* p0, jclass p1);
 
 #ifdef __cplusplus

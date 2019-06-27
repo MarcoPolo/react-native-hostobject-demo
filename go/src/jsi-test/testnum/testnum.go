@@ -20,12 +20,6 @@ func TestCb() *C.char {
 	return C.CString("Hello from Go")
 }
 
-//export TestCbGoString
-func TestCbGoString() string {
-	time.Sleep(1 * time.Second)
-	return "Hello from GoString"
-}
-
 //export Java_com_testmodule_MainActivity_hi
 func Java_com_testmodule_MainActivity_hi(env *C.JNIEnv, clazz C.jclass) {
 	g = g + 1
