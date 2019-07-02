@@ -1,8 +1,8 @@
 #include "TestBinding.h"
 
 #include <dlfcn.h>
+#include <forandroid.h>
 #include <jsi/JSIDynamic.h>
-#include <testnum.h>
 #include <chrono>  // std::chrono::seconds
 #include <thread>
 
@@ -61,10 +61,10 @@ jsi::Value TestBinding::get(jsi::Runtime &runtime,
             std::this_thread::sleep_for(std::chrono::seconds(2));
             eventhandler->callback.call(
                 runtime, jsi::String::createFromAscii(runtime, "Hello again!"));
-            auto str = TestCb();
-            auto to_return = jsi::String::createFromAscii(runtime, str);
-            free(str);
-            eventhandler->callback.call(runtime, to_return);
+            // auto str = TestStr();
+            // auto to_return = jsi::String::createFromAscii(runtime, str);
+            // free(str);
+            // eventhandler->callback.call(runtime, to_return);
           });
           t.detach();
           return jsi::Value::undefined();

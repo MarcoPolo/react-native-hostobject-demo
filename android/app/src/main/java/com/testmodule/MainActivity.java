@@ -1,12 +1,14 @@
 package com.testmodule;
 
+import android.util.Log;
+
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.ReactContext;
+import testnum.Testnum;
 
 public class MainActivity extends ReactActivity implements ReactInstanceManager.ReactInstanceEventListener {
     static {
-//        System.loadLibrary("testnum"); // this loads the library when the class is loaded
         System.loadLibrary("test_module_jni"); // this loads the library when the class is loaded
     }
 
@@ -22,6 +24,15 @@ public class MainActivity extends ReactActivity implements ReactInstanceManager.
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("GO", "From GO::::::::::::::::::::::");
+        Log.d("GO", String.valueOf(Testnum.testNum()));
+        Log.d("GO", String.valueOf(Testnum.testNum()));
+        Log.d("GO", String.valueOf(Testnum.testNum()));
+        Log.d("GO", String.valueOf(Testnum.testNum()));
+        Log.d("GO", String.valueOf(Testnum.testNum()));
+        Log.d("GO", String.valueOf(Testnum.testNum()));
+        Log.d("GO", String.valueOf(Testnum.testNum()));
+        Log.d("GO", String.valueOf(Testnum.testNum()));
 //        hi();
         getReactInstanceManager().addReactInstanceEventListener(this);
     }

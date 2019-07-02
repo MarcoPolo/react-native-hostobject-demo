@@ -1,7 +1,7 @@
-set -x
 # Change this if not on a macOS platform
 build() {
     GOPATH=`pwd`/../go
+    PATH=$GOPATH/bin:$PATH
     CLANG_HOME=$ANDROID_HOME/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin
     ARCH=$1
 
@@ -11,7 +11,8 @@ build() {
     # CGO_ENABLED=1 \
     # CC=$CLANG_HOME/$ARCH-clang \
     # CXX=$CLANG_HOME/$ARCH-clang++ \
-    go build -buildmode=c-shared -v jsi-test/testnum
+    $GOPATH/bin/gomobile bind -target=android/386 -v jsi-test/bind
+    # go build -buildmode=c-shared -v jsi-test/testnum
     # mv testnum ../android/app/src/main/jniLibs/$4/libtestnum.so
 }
 

@@ -47,5 +47,5 @@ add_library( # Sets the name of the library.
 
 target_link_libraries(test_module_jni
                       android
-                    "${PROJECT_SOURCE_DIR}/src/main/jniLibs/${ANDROID_ABI}/libtestnum.so"
+                     "${PROJECT_SOURCE_DIR}/build/exploded-aar/jni/${ANDROID_ABI}/libgojni.so"
                       log)
